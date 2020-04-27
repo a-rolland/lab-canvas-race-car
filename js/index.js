@@ -3,6 +3,7 @@ const ctx = canvas.getContext('2d')
 ctx.font = "30px Arial";
 
 let points = 0;
+let cY = 0;
 
 const coche = {
   img: null,
@@ -34,7 +35,13 @@ const road = {
     this.height = canvas.height;
   },
   mostrar: function() {
-    ctx.drawImage(this.img,this.x,this.y,this.width,this.height)
+    // ctx.drawImage(this.img,this.x,this.y,this.width,this.height)
+    ctx.drawImage(this.img, 0, cY, this.width, this.height);
+    ctx.drawImage(this.img, 0, cY-(this.height), this. width, this.height+33);
+    cY += 5;
+    if (cY >= canvas.height) {
+      cY = 0;
+    }
   }
 }
 
@@ -54,7 +61,7 @@ const obstacles = {
 }
 
 const obstaclesArr = [
-  [80,0,200,20],[160,0,260,20],[80,0,160,20],[300,0,120,20],[140,0,280,20],[240,0,180,20],[100,0,320,20],[230,0,190,20]
+  [80,0,200,20],[160,0,260,20],[100,0,160,20],[300,0,120,20],[140,0,280,20],[240,0,180,20],[160,0,260,20],[230,0,190,20]
 ]
 
 window.onload = () => {
@@ -73,6 +80,7 @@ function startGame() {
 }
 
 function updateGame() {
+  ctx.fillRect(0,0,canvas.width,canvas.height)
   if (!gameOver()) {
     road.mostrar();
     coche.mostrar();
